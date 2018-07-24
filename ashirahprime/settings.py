@@ -122,6 +122,16 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_BLACKLIST = secrets.settings['blacklist']
 
 
+# email
+EMAIL_BACKEND = secrets.settings['email_backend']
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = secrets.settings['email_user']
+EMAIL_HOST_PASSWORD = secrets.settings['email_password']
+DEFAULT_FROM_EMAIL = secrets.settings['email_from']
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
