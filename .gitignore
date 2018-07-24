@@ -1,0 +1,10 @@
+__pycache__/
+ashirahprimeenv/
+db.sqlite3
+.DS_Store
+.vscode/
+secrets.py
+static/
+media/media/
+sitemap.xml
+robots.txt
