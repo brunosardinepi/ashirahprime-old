@@ -24,5 +24,8 @@ class SignupView(views.SignupView):
 class PasswordChangeView(views.PasswordChangeView):
     template_name = 'password_change.html'
 
+class PasswordResetView(views.PasswordResetView):
+    template_name = 'password_reset.html'
+
 class ProfileView(TemplateView):
     template_name = 'profile.html'
