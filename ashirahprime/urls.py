@@ -13,6 +13,7 @@ urlpatterns = [
     path('accounts/logout/', views.LogoutView.as_view(), name='logout'),
     path('accounts/password/change/', views.PasswordChangeView.as_view(), name='password_change'),
     path('accounts/password/reset/', views.PasswordResetView.as_view(), name='password_reset'),
+    path('accounts/password/reset/done/', views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('accounts/signup/', views.SignupView.as_view(), name='signup'),
     path('accounts/', include('allauth.urls')),
     path('profile/', views.ProfileView.as_view(), name='profile'),
