@@ -20,3 +20,9 @@ class LogoutView(views.LogoutView):
 
 class SignupView(views.SignupView):
     template_name = 'signup.html'
+
+class PasswordChangeView(views.PasswordChangeView):
+    template_name = 'password_change.html'
+
+class ProfileView(TemplateView):
+    template_name = 'profile.html'
