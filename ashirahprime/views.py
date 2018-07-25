@@ -30,5 +30,11 @@ class PasswordResetView(views.PasswordResetView):
 class PasswordResetDoneView(views.PasswordResetDoneView):
     template_name = 'password_reset_done.html'
 
+class PasswordResetFromKeyView(views.PasswordResetFromKeyView):
+    template_name = 'password_reset_from_key.html'
+
+class PasswordResetFromKeyDoneView(views.PasswordResetFromKeyDoneView):
+    template_name = 'password_reset_from_key_done.html'
+
 class ProfileView(TemplateView):
     template_name = 'profile.html'
