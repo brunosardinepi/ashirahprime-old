@@ -9,7 +9,7 @@ Release date: TBD
 
 ### Additions
 
-* None
+* #1 -- user registration
 
 ### Changes
 
