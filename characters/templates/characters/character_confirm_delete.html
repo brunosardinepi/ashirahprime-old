@@ -1,0 +1,9 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ character.name }}"?</p>
+        <input type="submit" value="delete" />
+    </form>
+{% endblock %}

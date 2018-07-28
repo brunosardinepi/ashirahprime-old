@@ -1,0 +1,10 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    {% if character %}
+        <p>character name: {{ character.name }}</p>
+        <p><a href="{% url 'characters:character_delete' pk=character.pk %}">delete character</a></p>
+    {% else %}
+        no character. <a href="{% url 'characters:character_create' %}">create character</a>
+    {% endif %}
+{% endblock %}
