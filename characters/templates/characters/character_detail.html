@@ -3,6 +3,11 @@
 {% block body_content %}
     {% if character %}
         <p>character name: {{ character.name }}</p>
+        <p>equipment:</p>
+        <ul>
+            <li>armor: {% if character.armor %}{{ character.armor }}{% else %}none{% endif %}</li>
+            <li>weapon: {% if character.weapon %}{{ character.weapon }}{% else %}none{% endif %}</li>
+        </ul>
         <p><a href="{% url 'characters:character_edit' pk=character.pk %}">edit character</a></p>
         <p><a href="{% url 'characters:character_delete' pk=character.pk %}">delete character</a></p>
     {% else %}

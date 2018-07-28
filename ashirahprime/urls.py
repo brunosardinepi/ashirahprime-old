@@ -20,5 +20,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('characters/', include('characters.urls')),
+    path('items/', include('items.urls')),
     path('', views.HomeView.as_view(), name='home'),
 ]
