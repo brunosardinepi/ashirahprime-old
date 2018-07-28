@@ -10,6 +10,7 @@ Release date: TBD
 ### Additions
 
 * #1 -- user registration
+* #2 -- character creation
 
 ### Changes
 
