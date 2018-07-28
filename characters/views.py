@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from . import forms
 from . import models
@@ -26,6 +26,11 @@ class CharacterCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class CharacterUpdateView(UpdateView):
+    model = models.Character
+    fields = ['name']
 
 
 class CharacterDeleteView(DeleteView):
