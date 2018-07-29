@@ -25,12 +25,15 @@ class EquipItemView(View):
         # assign the item to a character's gear slot based on the item type
         item = get_object_or_404(models.Item, pk=kwargs['item_pk'])
         character = get_user_character(item.user)
-        if item.type == 'armor':
-            character.armor = item
-            character.save()
-        elif item.type == 'weapon':
-            character.weapon = item
-            character.save()
+        if character:
+            if item.type == 'armor':
+                character.armor = item
+                character.save()
+            elif item.type == 'weapon':
+                character.weapon = item
+                character.save()
+            else:
+                pass
         else:
             pass
         return HttpResponseRedirect('/characters/')
