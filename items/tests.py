@@ -58,9 +58,7 @@ class ItemTest(TestCase):
         self.assertEqual(self.character.weapon, None)
 
         self.client.force_login(self.users[0])
-        response = self.client.get(
-            '/items/{}/equip/{}/'.format(self.items[0].pk, self.character.pk)
-        )
+        response = self.client.get('/items/{}/equip/'.format(self.items[0].pk))
         self.assertRedirects(response, '/characters/', 302, 200)
         response = self.client.get('/characters/')
         self.assertContains(response, self.items[0])

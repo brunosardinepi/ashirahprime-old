@@ -6,16 +6,14 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from . import forms
 from . import models
+from . import utils
 
 
 class CharacterDetailView(View):
     template = 'characters/character_detail.html'
 
     def get(self, request, *args, **kwargs):
-        try:
-            character = models.Character.objects.get(user=request.user)
-        except ObjectDoesNotExist:
-            character = None
+        character = utils.get_user_character(request.user)
         return render(request, self.template, {'character': character})
 
 

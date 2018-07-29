@@ -6,6 +6,7 @@ from django.views import View
 
 from . import models
 from characters.models import Character
+from characters.utils import get_user_character
 
 
 class ItemListView(ListView):
@@ -18,21 +19,12 @@ class ItemListView(ListView):
 class ItemDetailView(DetailView):
     model = models.Item
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        try:
-            character = Character.objects.get(user=self.request.user)
-        except ObjectDoesNotExist:
-            character = None
-        context['character'] = character
-        return context
-
 
 class EquipItemView(View):
     def get(self, request, *args, **kwargs):
         # assign the item to a character's gear slot based on the item type
-        character = get_object_or_404(Character, pk=kwargs['character_pk'])
         item = get_object_or_404(models.Item, pk=kwargs['item_pk'])
+        character = get_user_character(item.user)
         if item.type == 'armor':
             character.armor = item
             character.save()
