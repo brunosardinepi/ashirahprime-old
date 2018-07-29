@@ -7,6 +7,16 @@ class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
+    TYPE = (
+        ('armor', 'armor'),
+        ('weapon', 'weapon'),
+    )
+    type = models.CharField(
+        max_length=10,
+        choices=TYPE,
+        default='armor',
+    )
+
     def __str__(self):
         return self.name
 

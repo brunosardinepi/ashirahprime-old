@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from model_mommy import mommy
 
 from . import models
+from characters.models import Character
 
 
 class ItemTest(TestCase):
@@ -11,7 +12,7 @@ class ItemTest(TestCase):
         self.client = Client()
 
         self.users = mommy.make(User, _quantity=2)
-
+        self.character = mommy.make(Character, user=self.users[0])
         self.items = mommy.make(models.Item, user=self.users[0], _quantity=3)
         self.items += mommy.make(models.Item, user=self.users[1], _quantity=3)
 
@@ -51,3 +52,15 @@ class ItemTest(TestCase):
         response = self.client.get('/items/{}/'.format(self.items[0].pk))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.items[0].name)
+
+    def test_equip_item(self):
+        self.assertEqual(self.character.armor, None)
+        self.assertEqual(self.character.weapon, None)
+
+        self.client.force_login(self.users[0])
+        response = self.client.get(
+            '/items/{}/equip/{}/'.format(self.items[0].pk, self.character.pk)
+        )
+        self.assertRedirects(response, '/characters/', 302, 200)
+        response = self.client.get('/characters/')
+        self.assertContains(response, self.items[0])
