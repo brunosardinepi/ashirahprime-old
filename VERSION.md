@@ -11,6 +11,7 @@ Release date: TBD
 
 * #1 -- user registration
 * #2 -- character creation
+* #3 -- gear slots, equip/unequip items
 
 ### Changes
 

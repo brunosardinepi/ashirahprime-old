@@ -2,5 +2,5 @@
 
 {% block body_content %}
     <p>item name: {{ object.name }}</p>
-    <p><a href="{% url 'items:equip_item' item_pk=object.pk %}">equip</a></p>
+    <p><a href="{% url 'items:equip_item' pk=object.pk %}">equip</a></p>
 {% endblock %}

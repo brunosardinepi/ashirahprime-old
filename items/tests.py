@@ -62,3 +62,15 @@ class ItemTest(TestCase):
         self.assertRedirects(response, '/characters/', 302, 200)
         response = self.client.get('/characters/')
         self.assertContains(response, self.items[0])
+
+    def test_unequip_item(self):
+        self.character.armor = self.items[0]
+        self.character.save()
+
+        self.assertEqual(self.character.armor, self.items[0])
+
+        self.client.force_login(self.users[0])
+        response = self.client.get('/items/{}/unequip/'.format(self.items[0].pk))
+        self.assertRedirects(response, '/characters/', 302, 200)
+        response = self.client.get('/characters/')
+        self.assertNotContains(response, self.items[0])

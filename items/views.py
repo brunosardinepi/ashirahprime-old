@@ -23,7 +23,7 @@ class ItemDetailView(DetailView):
 class EquipItemView(View):
     def get(self, request, *args, **kwargs):
         # assign the item to a character's gear slot based on the item type
-        item = get_object_or_404(models.Item, pk=kwargs['item_pk'])
+        item = get_object_or_404(models.Item, pk=kwargs['pk'])
         character = get_user_character(item.user)
         if character:
             if item.type == 'armor':
@@ -31,6 +31,25 @@ class EquipItemView(View):
                 character.save()
             elif item.type == 'weapon':
                 character.weapon = item
+                character.save()
+            else:
+                pass
+        else:
+            pass
+        return HttpResponseRedirect('/characters/')
+
+
+class UnequipItemView(View):
+    def get(self, request, *args, **kwargs):
+        # clear a character's gear slot based on the item type
+        item = get_object_or_404(models.Item, pk=kwargs['pk'])
+        character = get_user_character(item.user)
+        if character:
+            if item.type == 'armor':
+                character.armor = None
+                character.save()
+            elif item.type == 'weapon':
+                character.weapon = None
                 character.save()
             else:
                 pass
