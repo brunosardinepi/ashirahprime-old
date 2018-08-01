@@ -20,6 +20,7 @@ class Character(models.Model):
         null=True,
         blank=True,
     )
+    wallet = models.BigIntegerField(default=0)
 
     def __str__(self):
         return self.name
