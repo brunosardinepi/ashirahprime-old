@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -16,7 +15,12 @@ class Item(models.Model):
         default=ARMOR,
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        'characters.Character',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     name = models.CharField(max_length=255)
     is_for_sale = models.BooleanField(default=False)
     sale_price = models.BigIntegerField(default=0)

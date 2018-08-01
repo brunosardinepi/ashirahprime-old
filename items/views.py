@@ -13,7 +13,8 @@ class ItemListView(ListView):
     model = models.Item
 
     def get_queryset(self):
-        return models.Item.objects.filter(user=self.request.user).order_by('name')
+        character = get_user_character(self.request.user)
+        return models.Item.objects.filter(owner=character).order_by('name')
 
 
 class ItemDetailView(DetailView):
@@ -24,7 +25,7 @@ class EquipItemView(View):
     def get(self, request, *args, **kwargs):
         # assign the item to a character's gear slot based on the item type
         item = get_object_or_404(models.Item, pk=kwargs['pk'])
-        character = get_user_character(item.user)
+        character = get_user_character(item.owner.user)
         if character:
             if item.type == 'armor':
                 character.armor = item
@@ -43,7 +44,7 @@ class UnequipItemView(View):
     def get(self, request, *args, **kwargs):
         # clear a character's gear slot based on the item type
         item = get_object_or_404(models.Item, pk=kwargs['pk'])
-        character = get_user_character(item.user)
+        character = get_user_character(item.owner.user)
         if character:
             if item.type == 'armor':
                 character.armor = None
