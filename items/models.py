@@ -4,18 +4,22 @@ from django.urls import reverse
 
 
 class Item(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-
+    ARMOR = 'armor'
+    WEAPON = 'weapon'
     TYPE = (
-        ('armor', 'armor'),
-        ('weapon', 'weapon'),
+        (ARMOR, 'Armor'),
+        (WEAPON, 'Weapon'),
     )
     type = models.CharField(
         max_length=10,
         choices=TYPE,
-        default='armor',
+        default=ARMOR,
     )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    is_for_sale = models.BooleanField(default=False)
+    sale_price = models.BigIntegerField(default=0)
 
     def __str__(self):
         return self.name
