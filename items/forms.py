@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, ModelForm
 
 from . import models
 from characters.models import Character
@@ -18,3 +18,9 @@ ItemFormSet = inlineformset_factory(
         'name': forms.TextInput(attrs={'readonly': 'readonly'}),
     },
 )
+
+
+class BuyItemForm(ModelForm):
+    class Meta:
+        model = models.Item
+        fields = ['name']

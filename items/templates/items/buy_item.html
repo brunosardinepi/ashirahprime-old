@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>item name: {{ item.name }}</p>
+    <p>item price: {{ item.sale_price }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="buy" />
+    </form>
+
+{% endblock %}

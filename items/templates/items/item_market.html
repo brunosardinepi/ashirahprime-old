@@ -5,7 +5,7 @@
     {% if object_list %}
         <ul>
             {% for item in object_list %}
-                <li><a href="{% url 'items:item_detail' pk=item.pk %}">{{ item.name }}</a> ({{ item.get_type_display }}) - {{ item.sale_price }}</li>
+                <li><a href="{% url 'items:item_detail' pk=item.pk %}">{{ item.name }}</a> ({{ item.get_type_display }}) - {{ item.sale_price }} - <a href="{% url 'items:buy_item' pk=item.pk %}">buy</a></li>
             {% endfor %}
         </ul>
     {% else %}

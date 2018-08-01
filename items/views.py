@@ -7,7 +7,7 @@ from django.views import View
 from . import forms
 from . import models
 from characters.models import Character
-from characters.utils import get_user_character
+from characters.utils import add_credits, get_user_character, subtract_credits
 
 
 class ItemListView(ListView):
@@ -84,3 +84,33 @@ class ItemMarketView(ListView):
 
     def get_queryset(self):
         return models.Item.objects.filter(is_for_sale=True).order_by('name')
+
+
+class BuyItemView(View):
+    def get(self, request, *args, **kwargs):
+        item = get_object_or_404(models.Item, pk=kwargs['pk'])
+        form = forms.BuyItemForm(instance=item)
+        return render(request, 'items/buy_item.html',
+            {'item': item, 'form': form},
+        )
+
+    def post(self, request, *args, **kwargs):
+        # when an item is purchased, change:
+        # is_for_sale = False
+        # owner is now the buyer
+        # buyer loses credits
+        # seller gains credits
+        character = get_user_character(self.request.user)
+        item = get_object_or_404(models.Item, pk=kwargs['pk'])
+        form = forms.BuyItemForm(request.POST, instance=item)
+        if form.is_valid():
+            item = form.save(commit=False)
+            if character.wallet >= item.sale_price:
+                item.is_for_sale = False
+                add_credits(item.owner, item.sale_price)
+                item.owner = character
+                item.save()
+                subtract_credits(item.owner, item.sale_price)
+                return HttpResponseRedirect('/items/')
+            else:
+                print("Not enough credits")

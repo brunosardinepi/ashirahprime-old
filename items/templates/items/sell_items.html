@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 
 {% block body_content %}
+    <p>wallet: {{ character.wallet }}</p>
     <form method="post">
         {% csrf_token %}
         {{ formset.management_form }}
