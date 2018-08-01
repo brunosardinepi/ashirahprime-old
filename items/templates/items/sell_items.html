@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <table>
+            <tr>
+                <th>name</th>
+                <th>for sale</th>
+                <th>price</th>
+            </tr>
+            {% for form in formset %}
+                {{ form.id }}
+                <tr>
+                    <td>{{ form.name }}</td>
+                    <td>{{ form.is_for_sale }}</td>
+                    <td>{{ form.sale_price }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="sell" />
+    </form>
+{% endblock %}
