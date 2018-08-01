@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>items for sale:</p>
+    {% if object_list %}
+        <ul>
+            {% for item in object_list %}
+                <li><a href="{% url 'items:item_detail' pk=item.pk %}">{{ item.name }}</a> ({{ item.get_type_display }}) - {{ item.sale_price }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>none</p>
+    {% endif %}
+{% endblock %}

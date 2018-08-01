@@ -76,3 +76,11 @@ class SellItemsView(View):
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect('/items/sell/')
+
+
+class ItemMarketView(ListView):
+    model = models.Item
+    template_name = "items/item_market.html"
+
+    def get_queryset(self):
+        return models.Item.objects.filter(is_for_sale=True).order_by('name')

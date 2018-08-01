@@ -11,5 +11,6 @@
     {% else %}
         <p>none</p>
     {% endif %}
+    <p><a href="{% url 'items:item_market' %}">buy items</a></p>
     <p><a href="{% url 'items:sell_items' %}">sell items</a></p>
 {% endblock %}
