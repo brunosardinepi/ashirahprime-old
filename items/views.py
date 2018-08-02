@@ -7,7 +7,7 @@ from django.views import View
 from . import forms
 from . import models
 from characters.models import Character
-from characters.utils import add_credits, get_user_character, subtract_credits
+from characters.utils import complete_transaction, get_user_character
 
 
 class ItemListView(ListView):
@@ -105,12 +105,7 @@ class BuyItemView(View):
         form = forms.BuyItemForm(request.POST, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
-            if character.wallet >= item.sale_price:
-                item.is_for_sale = False
-                add_credits(item.owner, item.sale_price)
-                item.owner = character
-                item.save()
-                subtract_credits(item.owner, item.sale_price)
+            if complete_transaction(character, item):
                 return HttpResponseRedirect('/items/')
             else:
                 print("Not enough credits")
