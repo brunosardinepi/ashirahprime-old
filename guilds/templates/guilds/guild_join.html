@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>do you want to join this guild: {{ guild.name }}</p>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">join</button>
+    </form>
+{% endblock %}

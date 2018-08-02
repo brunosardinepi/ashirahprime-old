@@ -27,3 +27,6 @@ class Character(models.Model):
 
     def get_absolute_url(self):
         return reverse('characters:character_detail')
+
+    def guilds(self):
+        return self.members.all()

@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>all guilds:</p>
+    {% if object_list %}
+        <ul>
+            {% for guild in object_list %}
+                <li><a href="{% url 'guilds:guild_detail' pk=guild.pk %}">{{ guild.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>none</p>
+    {% endif %}
+{% endblock %}

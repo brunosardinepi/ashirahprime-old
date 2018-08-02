@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'characters',
     'items',
+    'guilds',
 ]
 
 MIDDLEWARE = [

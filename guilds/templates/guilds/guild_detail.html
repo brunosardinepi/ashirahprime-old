@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>guild name: {{ guild.name }}</p>
+    <p><a href="{% url 'guilds:guild_edit' pk=guild.pk %}">edit guild</a></p>
+    <p><a href="{% url 'guilds:guild_join' pk=guild.pk %}">join guild</a></p>
+    <p><a href="{% url 'guilds:guild_leave' pk=guild.pk %}">leave guild</a></p>
+    <p>guild members:</p>
+    <ul>
+        {% for member in members %}
+            <li>{{ member.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
