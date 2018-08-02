@@ -83,7 +83,8 @@ class ItemMarketView(ListView):
     template_name = "items/item_market.html"
 
     def get_queryset(self):
-        return models.Item.objects.filter(is_for_sale=True).order_by('name')
+        character = get_user_character(self.request.user)
+        return models.Item.objects.filter(is_for_sale=True).exclude(owner=character).order_by('name')
 
 
 class BuyItemView(View):

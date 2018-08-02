@@ -129,13 +129,19 @@ class ItemTest(TestCase):
         character = self.character2
 
         # check for items on market list
+        self.items[3].is_for_sale = True
+        self.items[3].save()
+
         self.client.force_login(self.users[1])
         response = self.client.get('/items/market/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, item.name)
         self.assertContains(response, item.sale_price)
         self.assertContains(response, "buy")
+        # shouldn't see this item because it's not for sale
         self.assertNotContains(response, self.items[1].name)
+        # shouldn't see this item because it's mine
+        self.assertNotContains(response, self.items[3].name)
 
         # buy item confirmation page
         response = self.client.get('/items/{}/buy/'.format(item.pk))
