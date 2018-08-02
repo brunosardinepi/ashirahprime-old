@@ -34,11 +34,14 @@ class GuildSearchView(ListView):
     model = models.Guild
     template_name = "guilds/guild_search.html"
 
+    def get_queryset(self):
+        return models.Guild.objects.filter(is_public=True).order_by('name')
+
 
 class GuildCreateView(View):
     def get(self, request, *args, **kwargs):
         form = forms.GuildForm()
-        return render(request, 'guilds/guild_create.html', {'form': form})
+        return render(request, 'guilds/guild_form.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = forms.GuildForm(request.POST)
@@ -87,6 +90,18 @@ class GuildLeaveView(View):
             return HttpResponseRedirect('/guilds/')
 
 
-class GuildUpdateView(UpdateView):
-    model = models.Guild
-    fields = ['name', 'is_public']
+class GuildUpdateView(View):
+    def get(self, request, *args, **kwargs):
+        guild = get_object_or_404(models.Guild, pk=kwargs['pk'])
+        form = forms.GuildForm(instance=guild)
+        return render(request,
+            'guilds/guild_form.html',
+            {'guild': guild, 'form': form}
+        )
+
+    def post(self, request, *args, **kwargs):
+        guild = get_object_or_404(models.Guild, pk=kwargs['pk'])
+        form = forms.GuildForm(request.POST, instance=guild)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/guilds/')

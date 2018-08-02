@@ -7,4 +7,4 @@ from . import models
 class GuildForm(ModelForm):
     class Meta:
         model = models.Guild
-        fields = ['name']
+        fields = ['name', 'is_public']
