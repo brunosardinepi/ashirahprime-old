@@ -26,13 +26,21 @@ class MessageListView(View):
         )
 
 
-class MessageDetailView(DetailView):
-    model = models.Message
+class MessageDetailView(View):
+    def get(self, request, *args, **kwargs):
+        # context for template
+        character = get_user_character(self.request.user)
+        message = get_object_or_404(models.Message, pk=kwargs['pk'])
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['character'] = get_user_character(self.request.user)
-        return context
+        # set message to 'read' if this is the first time opening
+        if message.is_read == False:
+            message.is_read = True
+            message.save()
+
+        return render(request,
+            'mail/message_detail.html',
+            {'character': character, 'message': message},
+        )
 
 
 class MessageCreateView(View):

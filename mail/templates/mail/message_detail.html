@@ -1,11 +1,11 @@
 {% extends "_base.html" %}
 
 {% block body_content %}
-    <p>from: {{ object.sender }}</p>
-    <p>to: {{ object.recipient }}</p>
-    <p>subject: {{ object.subject }}</p>
-    <p>message: {{ object.body }}</p>
-    {% if not object.sender == character %}
-        <p><a href="{% url 'mail:message_reply' pk=object.pk %}">reply</a></p>
+    <p>from: {{ message.sender }}</p>
+    <p>to: {{ message.recipient }}</p>
+    <p>subject: {{ message.subject }}</p>
+    <p>message: {{ message.body }}</p>
+    {% if not message.sender == character %}
+        <p><a href="{% url 'mail:message_reply' pk=message.pk %}">reply</a></p>
     {% endif %}
 {% endblock %}
