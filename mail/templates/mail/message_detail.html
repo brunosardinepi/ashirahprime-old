@@ -1,0 +1,8 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>from: {{ object.sender }}</p>
+    <p>to: {{ object.recipient }}</p>
+    <p>subject: {{ object.subject }}</p>
+    <p>message: {{ object.body }}</p>
+{% endblock %}

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'characters',
     'items',
     'guilds',
+    'mail',
 ]
 
 MIDDLEWARE = [

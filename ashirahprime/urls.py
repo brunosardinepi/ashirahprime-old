@@ -22,5 +22,6 @@ urlpatterns = [
     path('characters/', include('characters.urls')),
     path('items/', include('items.urls')),
     path('guilds/', include('guilds.urls')),
+    path('mail/', include('mail.urls')),
     path('', views.HomeView.as_view(), name='home'),
 ]

@@ -1,0 +1,27 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>inbox:</p>
+    {% if received_messages %}
+        <ul>
+            {% for message in received_messages %}
+                <li>{% if message.is_read == True %}read{% else %}unread{% endif %} - from: {{ message.sender }}; to: {{ message.recipient }}; subject: <a href="{% url 'mail:message_detail' pk=message.pk %}">{{ message.subject }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>none</p>
+    {% endif %}
+
+    <p>sent:</p>
+    {% if sent_messages %}
+        <ul>
+            {% for message in sent_messages %}
+                <li>from: {{ message.sender }}; to: {{ message.recipient }}; subject: <a href="{% url 'mail:message_detail' pk=message.pk %}">{{ message.subject }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>none</p>
+    {% endif %}
+
+    <p><a href="{% url 'mail:message_create' %}">create message</a></p>
+{% endblock %}
