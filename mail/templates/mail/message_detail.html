@@ -5,4 +5,7 @@
     <p>to: {{ object.recipient }}</p>
     <p>subject: {{ object.subject }}</p>
     <p>message: {{ object.body }}</p>
+    {% if not object.sender == character %}
+        <p><a href="{% url 'mail:message_reply' pk=object.pk %}">reply</a></p>
+    {% endif %}
 {% endblock %}

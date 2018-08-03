@@ -12,3 +12,10 @@ class MessageForm(ModelForm):
             'subject',
             'body',
         ]
+
+class MessageReplyForm(ModelForm):
+    class Meta:
+        model = models.Message
+        fields = [
+            'body',
+        ]

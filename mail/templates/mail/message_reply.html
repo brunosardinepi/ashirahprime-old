@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+
+{% block body_content %}
+    <p>recipient: {{ previous_message.sender }}</p>
+    <p>subject: {{ previous_message.subject }}</p>
+    <form method="POST" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">send</button>
+    </form>
+{% endblock %}
