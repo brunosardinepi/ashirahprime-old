@@ -13,6 +13,7 @@ Release date: TBD
 * #2 -- character creation
 * #3 -- gear slots, equip/unequip items
 * #4 -- item buy/sell, item market
+* #5 -- guilds
 
 ### Changes
 
