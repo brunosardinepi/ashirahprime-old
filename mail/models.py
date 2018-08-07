@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
 
 class Message(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     sender = models.ForeignKey(
         'characters.Character',
         null=True,

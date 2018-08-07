@@ -18,14 +18,30 @@ class MailTest(TestCase):
             models.Message,
             sender=self.character,
             recipient=self.character2,
+            owner=self.users[0],
+            _fill_optional=['subject'],
             _quantity=3,
         )
         self.messages += mommy.make(
             models.Message,
             sender=self.character2,
             recipient=self.character,
+            owner=self.users[1],
+            _fill_optional=['subject'],
             _quantity=3,
         )
+
+        for x in range(3):
+            message = self.messages[x]
+            message.pk = None
+            message.owner = self.messages[x].recipient.user
+            message.save()
+
+        for x in range(3,6):
+            message = self.messages[x]
+            message.pk = None
+            message.owner = self.messages[x].recipient.user
+            message.save()
 
     def test_message_exists(self):
         messages = models.Message.objects.all()
@@ -68,6 +84,21 @@ class MailTest(TestCase):
         self.assertContains(response, self.messages[3].sender.name)
         self.assertContains(response, self.messages[3].subject)
 
+        # reply to message
+        data = {
+            'body': 'this is a reply to the message',
+        }
+        response = self.client.post(
+            '/mail/{}/reply/'.format(self.messages[3].pk),
+            data=data
+        )
+        self.assertRedirects(response, '/mail/', 302, 200)
+
+        # there should be 2 of the message subject now because
+        # we just added a reply
+        response = self.client.get('/mail/')
+        self.assertContains(response, self.messages[3].subject, count=2)
+
     def test_message_send(self):
         self.client.force_login(self.users[0])
         response = self.client.get('/mail/create/')
@@ -77,7 +108,7 @@ class MailTest(TestCase):
         subject = 'this is a test subject'
         body = 'hello friend pls respond'
         data = {
-            'recipient': self.users[1].pk,
+            'recipient': self.character2.pk,
             'subject': subject,
             'body': body,
         }
@@ -111,3 +142,19 @@ class MailTest(TestCase):
         response = self.client.get('/mail/')
         self.assertNotContains(response, 'unread')
         self.assertContains(response, 'read', count=3)
+
+    def test_message_delete(self):
+        # delete mail from users[1] inbox
+        self.client.force_login(self.users[1])
+        response = self.client.get('/mail/')
+        self.assertContains(response, self.messages[0].subject)
+        response = self.client.get('/mail/{}/delete/'.format(self.messages[0].pk))
+        self.assertRedirects(response, '/mail/', 302, 200)
+        response = self.client.get('/mail/')
+        self.assertNotContains(response, self.messages[0].subject)
+        self.client.logout()
+
+        # make sure mail is in users[0] sent folder
+        self.client.force_login(self.users[0])
+        response = self.client.get('/mail/')
+        self.assertContains(response, self.messages[0].subject)

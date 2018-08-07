@@ -12,9 +12,9 @@ class MessageListView(View):
     def get(self, request, *args, **kwargs):
         character = get_user_character(self.request.user)
         sent_messages = models.Message.objects.filter(
-            sender=character).order_by('-date')
+            owner=request.user, sender=character).order_by('-date')
         received_messages = models.Message.objects.filter(
-            recipient=character).order_by('-date')
+            owner=request.user, recipient=character).order_by('-date')
 
         return render(request,
             'mail/message_list.html',
@@ -57,8 +57,19 @@ class MessageCreateView(View):
             character = get_user_character(self.request.user)
             message.sender = character
 
+            # set owner to current user
+            message.owner = request.user
+
             message.save()
+
+            # create a copy to be shown in the recipient's inbox
+            message.pk = None
+            message.owner = message.recipient.user
+            message.save()
+
             return redirect('mail:message_list')
+        else:
+            print(form.errors)
 
 
 class MessageReplyView(View):
@@ -85,9 +96,27 @@ class MessageReplyView(View):
             character = get_user_character(self.request.user)
             message.sender = character
 
+            # set owner to current user
+            message.owner = request.user
+
             # carry over immutable fields since this is a reply
             message.recipient = previous_message.sender
             message.subject = previous_message.subject
 
             message.save()
+
+            # create a copy to be shown in the recipient's inbox
+            message.pk = None
+            message.owner = message.recipient.user
+            message.save()
+
+            return redirect('mail:message_list')
+
+
+class MessageDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        message = get_object_or_404(models.Message, pk=kwargs['pk'])
+        # check if this user is the message owner before deleting
+        if message.owner == request.user:
+            message.delete()
             return redirect('mail:message_list')

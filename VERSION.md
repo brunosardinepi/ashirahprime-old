@@ -14,6 +14,7 @@ Release date: TBD
 * #3 -- gear slots, equip/unequip items
 * #4 -- item buy/sell, item market
 * #5 -- guilds
+* #6 -- personal inbox/messaging
 
 ### Changes
 

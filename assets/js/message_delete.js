@@ -1,0 +1,1 @@
+$(document).ready(function(){$(".delete-message").click(function(){return confirm("Are you sure you want to delete this message?")})})

@@ -1,11 +1,13 @@
 {% extends "_base.html" %}
+{% load static from staticfiles %}
+
 
 {% block body_content %}
     <p>inbox:</p>
     {% if received_messages %}
         <ul>
             {% for message in received_messages %}
-                <li>{% if message.is_read == True %}read{% else %}unread{% endif %} - {{ message.date }} - from: {{ message.sender }}; to: {{ message.recipient }}; subject: <a href="{% url 'mail:message_detail' pk=message.pk %}">{{ message.subject }}</a></li>
+                <li>{% if message.is_read == True %}read{% else %}unread{% endif %} - {{ message.date }} - from: {{ message.sender }}; to: {{ message.recipient }}; subject: <a href="{% url 'mail:message_detail' pk=message.pk %}">{{ message.subject }}</a> - <a href="{% url 'mail:message_delete' pk=message.pk %}" class="delete-message">delete</a></li>
             {% endfor %}
         </ul>
     {% else %}
@@ -24,4 +26,8 @@
     {% endif %}
 
     <p><a href="{% url 'mail:message_create' %}">create message</a></p>
+{% endblock %}
+
+{% block body_extra %}
+    <script src="{% static 'js/message_delete.js' %}"></script>
 {% endblock %}
