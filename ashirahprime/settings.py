@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'items',
     'guilds',
     'mail',
+    'forum',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+{% load static from staticfiles %}
+
+
+{% block body_content %}
+    <p><a href="{% url 'forum:forum_list' %}">back to all forums</a></p>
+    <p>forum: {{ forum.name }}</p>
+    <p><a href="{% url 'forum:post_create' pk=forum.pk %}">create post</a></p>
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <li>{{ post.date }} - user: {{ post.user }} - <a href="{% url 'forum:post_detail' forum_pk=forum.pk post_pk=post.pk %}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>no posts</p>
+    {% endif %}
+{% endblock %}

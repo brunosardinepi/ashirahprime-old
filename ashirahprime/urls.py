@@ -23,5 +23,6 @@ urlpatterns = [
     path('items/', include('items.urls')),
     path('guilds/', include('guilds.urls')),
     path('mail/', include('mail.urls')),
+    path('forum/', include('forum.urls')),
     path('', views.HomeView.as_view(), name='home'),
 ]

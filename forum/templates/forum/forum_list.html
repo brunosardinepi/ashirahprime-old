@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% load static from staticfiles %}
+
+
+{% block body_content %}
+    <p>forums:</p>
+    <ul>
+        {% if forums %}
+            {% for forum in forums %}
+                <li><a href="{% url 'forum:forum_detail' pk=forum.pk %}">{{ forum.name }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+{% endblock %}

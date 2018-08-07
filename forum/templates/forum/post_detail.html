@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+{% load static from staticfiles %}
+
+
+{% block body_content %}
+    <p><a href="{% url 'forum:forum_list' %}">back to all forums</a></p>
+    <p><a href="{% url 'forum:forum_detail' pk=post.forum.pk %}">back to {{ post.forum.name }}</a></p>
+    <p>post title: {{ post.title }}</p>
+    <p>post user: {{ post.user }}</p>
+    <p>post body: {{ post.body }}</p>
+    <p><a href="{% url 'forum:comment_create' forum_pk=post.forum.pk post_pk=post.pk %}">comment on this post</a></p>
+
+    <p>comments: </p>
+    {% if post.comments %}
+        {% for comment in post.comments %}
+            <p>{{ comment.date }} - user: {{ comment.user }} - body: {{ comment.body }}</p>
+        {% endfor %}
+    {% else %}
+        <p>no comments</p>
+    {% endif %}
+{% endblock %}
