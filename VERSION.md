@@ -15,6 +15,7 @@ Release date: TBD
 * #4 -- item buy/sell, item market
 * #5 -- guilds
 * #6 -- personal inbox/messaging
+* #7 -- forum
 
 ### Changes
 
